@@ -1,0 +1,57 @@
+#demo02 .x
+{
+	font-weight: bold;
+	color: #cc0000;
+}
+/* Page CSS */
+*
+{
+	margin	: 0;
+	padding	: 0;	
+	list-style	: none;
+	outline: none;
+	resize: none;
+}
+body
+{
+	font : normal 12px Arial;
+	padding: 0 0 30px;
+}
+#container
+{
+	width	: 800px;
+	margin	: 0 auto;
+}
+h1
+{
+	margin	: 30px 0 15px;
+	font-size: 25px;
+}
+h2
+{
+	font-size: 20px;
+	margin: 15px 0;
+}
+p
+{
+	margin	: 15px 0 15px;
+	line-height: 22px;
+	font-size: 14px;
+}
+#changelog
+{
+	display	: none;
+}
+.row
+{
+	clear	: both;
+	overflow	: hidden;	
+}
+.clear
+{
+	clear: both;
+}
+img
+{
+	cursor	: pointer;	
+}

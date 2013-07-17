@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>SortedList - Lutrasoft</title>
+
+<!-- jQuery required -->
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+ 
+<!-- SortedList -->
+<script type="text/javascript" src="../dev/jquery.sortedlist.js"></script>
+
+<!-- Demo JS -->
+<script type="text/javascript" src="scripts/demo.js"></script>
+
+<!-- Prettify -->
+<script type="text/javascript" src="scripts/prettify.js"></script>
+<link href="css/prettify.css" type="text/css" rel="stylesheet" />
+
+<link href="css/demo.css" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+	<div id="container">
+		<h1>SortedList</h1>
+		
+		<p>
+			SortedList is a jQuery plugin to sort list the way you want.
+		</p>
+		
+		<p>Now available on <a href="https://github.com/Lutrasoft/SortedList">GitHub</a>!</p>
+		
+		<h2>Standard</h2>
+		<p>Example below is sorted first the checked items and than the initial index. Default it uses a checkbox to sort.</p>
+		<ul id="demo01">
+			<li><input type="checkbox" /> A</li>
+			<li><input type="checkbox" /> B</li>
+			<li><input type="checkbox" /> C</li>
+			<li><input type="checkbox" /> D</li>
+			<li><input type="checkbox" /> E</li>
+			<li><input type="checkbox" /> F</li>
+			<li><input type="checkbox" /> G</li>
+			<li><input type="checkbox" /> H</li>
+		</ul>
+		<pre class="prettyprint">$("#demo01").sortedList();</pre>
+		
+		<h2>Custom sorting</h2>
+		<p>Sort on checked and second on the class 'x' (style bold and red) and third on the index</p>
+		<ul id="demo02">
+			<li><input type="checkbox" /> A</li>
+			<li><input type="checkbox" /> B</li>
+			<li class="x"><input type="checkbox" /> C</li>
+			<li class="x"><input type="checkbox" /> D</li>
+			<li><input type="checkbox" /> E</li>
+			<li><input type="checkbox" /> F</li>
+			<li><input type="checkbox" /> G</li>
+			<li><input type="checkbox" /> H</li>
+		</ul>
+		<pre class="prettyprint">$("#demo02").sortedList({
+	sort : [
+		// Sort on moved or not DESC
+		//	Like you see data, you can use attr or whatever jQuery getter you want
+		//	it calls functions like: a.data( "al-moved" ), a.attr( "al-moved" ), etc
+		{ desc : { data : "al-moved" } },
+		
+		// Sort on the class "x"
+		function( el ){
+			return !$(el).hasClass( "x");
+		},
+		
+		// Sort on the data index ASC
+		{ asc : { data : "al-index" } }
+	]
+});</pre>
+		
+		<h2>License / Download</h2>
+		<p>
+			SortedList dual licensed under the <a href="http://www.opensource.org/licenses/mit-license.php" target="_BLANK">MIT</a> and <a href="http://www.gnu.org/licenses/gpl.html" target="_BLANK">GPL</a> licenses.<br />
+			<br />
+			<a href="https://github.com/Lutrasoft/SortedList/blob/master/dev/jquery.sortedlist.js">Developers version</a> | <a href="https://github.com/Lutrasoft/SortedList/blob/master/demo/jquery.sortedlist.min.js">Minified version</a><br />
+			<br />
+			Help us keep the projects running.
+		</p>
+
+		<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+			<input type="hidden" name="cmd" value="_s-xclick">
+			<input type="hidden" name="hosted_button_id" value="SAZ4SM57C6PJU">
+			<input type="image" src="https://www.paypalobjects.com/nl_NL/NL/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal, de veilige en complete manier van online betalen.">
+			<img alt="" border="0" src="https://www.paypalobjects.com/nl_NL/i/scr/pixel.gif" width="1" height="1">
+		</form>
+		
+		<h2>Related plugins</h2>
+		<ul>
+			<li><a href="http://www.lutrasoft.nl/jQuery/fancyform/">jQuery Fancyform</a></li>
+		</ul>
+	</div>
+</body>
+</html>
