@@ -1,6 +1,6 @@
 # jQuery SortedList (Javascript)
 
-SortedList is a jQuery plugin to sort list the way you want. You can see a [demo](http://www.lutrasoft.nl/jQuery/SortedList/) at the website.
+SortedList is a jQuery plugin to sort list the way you want. You can see a [demo](http://www.lutrasoft.nl/jQuery/sortedlist/) at the website.
 
 ## Example code
 
