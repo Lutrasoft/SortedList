@@ -1,12 +1,12 @@
 {
     "name": "SortedList",
     "title": "SortedList",
-    "description": "SortedList is a jQuery plugin to sort list the way you want.",
+    "description": "SortedList is a jQuery plugin to sort a list of DOM elements the way you want. Think about LI, TR, OPTION and even DIVS.",
     "keywords": [
 		"ui",
 		"jquery"
     ],
-    "version": "0.0.2",
+    "version": "0.0.3",
     "author": {
         "name": "Lutrasoft",
         "url": ""

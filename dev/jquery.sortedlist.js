@@ -6,7 +6,7 @@
 *
 * Copyright (c) 2010-2013 - Lutrasoft
 *
-* Version: 0.0.1
+* Version: 0.0.3
 * Requires: jQuery v1.3.4+
 *
 * Dual licensed under the MIT and GPL licenses:
@@ -16,34 +16,26 @@
 function SortedList( domUL, s )
 {
     var _me = this,
-        _ul = $( domUL),
-        _settings = s;
+        _ul = $( domUL);
+		
+	_me.settings = s;
 
     _me.init = function () {
         // Set LI index
-        _ul.children( "li" ).each( function () {
+        _ul.children( _me.settings.selector ).each( function () {
 			var t = $( this );
             t.data( "al-index", t.index() );
-            t.data( "al-moved", 0 );
         });
-
-        // When checkbox change, move to top or back into position
-        _ul.find( "input[type=checkbox]" ).change( $.proxy( _me.itemChange, this ) );
 		
 		// Order now
 		_me.order();
     }
-    _me.itemChange = function ( e ) {
-        var cb = $( e.target )
-        cb.closest( "li" ).data( "al-moved", cb.is( ":checked" ) );
-        _me.order( );
-    }
 
     _me.order = function () {
         _ul.append(
-            _ul.children("li").sort(function (a, b) {
+            _ul.find( _me.settings.selector ).sort(function (a, b) {
 				var i, r;
-                for( i=0 ; i<_settings.sort.length ; i++ )
+                for( i=0 ; i<_me.settings.sort.length ; i++ )
 				{
 					r = _me.handleSort( i, $(a), $(b) )
 					if( r ) { return r; }
@@ -56,11 +48,14 @@ function SortedList( domUL, s )
 	
 	_me.handleSort = function( index, a, b )
 	{
-		var item = _settings.sort[ index ], k, r;
+		var item = _me.settings.sort[ index ], k, r, ar, br;
 		switch( typeof item )
 		{
 			case "function":
-				return _me.handle( item( a ), item( b ) );
+				ar = item( a );
+				br = item( b );
+				
+				return typeof ar == "object" ? _me.handle( ar.data, br.data, ar.order  ) : _me.handle( ar, br  );
 				
 			case "object":
 				var keys = _me.getKeys( item ),
@@ -94,14 +89,36 @@ function SortedList( domUL, s )
 }
 $.sortedList = {
 	defaults : {
+		selector : "li",
 		sort : [
-			{ desc : { data : "al-moved" } },
 			{ asc : { data : "al-index" } }
 		]
 	}
 };
-$.fn.sortedList = function( settings ){
+
+$.fn.sortedList = function( settings, value ){
     return this.each( function(){
-        new SortedList( this, $.extend( { }, $.sortedList.defaults, settings ) );
+		var _this = this,
+			_$this = $( _this ),
+			t, sl;
+			
+		if( _$this.data( "al" ) )
+		{
+			sl = _$this.data("al");
+			if( value )
+			{
+				sl.settings[ settings ] = value;
+			}
+			else
+			{
+				// Call function or return setting
+				t = sl[ settings ];
+				return typeof t == "function" ? t( ) : sl.settings[ settings ];
+			}
+		}
+		else
+		{
+			_$this.data( "al", new SortedList( _this, $.extend( { }, $.sortedList.defaults, settings ) ) );
+		}
     } );
 };

@@ -25,27 +25,80 @@
 		<h1>SortedList</h1>
 		
 		<p>
-			SortedList is a jQuery plugin to sort list the way you want.
+			SortedList is a jQuery plugin to sort a list of DOM elements the way you want. Think about LI, TR, OPTION and even DIVS.
 		</p>
 		
 		<p>Now available on <a href="https://github.com/Lutrasoft/SortedList">GitHub</a>!</p>
 		
-		<h2>Standard</h2>
-		<p>Example below is sorted first the checked items and than the initial index. Default it uses a checkbox to sort.</p>
-		<ul id="demo01">
-			<li><input type="checkbox" /> A</li>
-			<li><input type="checkbox" /> B</li>
-			<li><input type="checkbox" /> C</li>
-			<li><input type="checkbox" /> D</li>
-			<li><input type="checkbox" /> E</li>
-			<li><input type="checkbox" /> F</li>
-			<li><input type="checkbox" /> G</li>
-			<li><input type="checkbox" /> H</li>
-		</ul>
-		<pre class="prettyprint">$("#demo01").sortedList();</pre>
+		<h2>Sorting with table rows</h2>
+		<p>
+			Click on the table header to sort on that column, a second click makes is switch between ASC / DESC.<br />
+			As you can see, you can easily update the sort settings, handle the ASC / DESC and sort the elements exactly the way you want.<br />
+			<br />
+			What would be nice (and maybe in the future) would be that the demo would sort on 2 columns at once. This can easiliy be done by added and removing sort functions to the sort Array.
+		</p>
+		<table border="1" width="200">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>1</td>
+					<td>Fred</td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td>Angelique</td>
+				</tr>
+				<tr>
+					<td>3</td>
+					<td>Dorian</td>
+				</tr>
+				<tr>
+					<td>4</td>
+					<td>Alice</td>
+				</tr>
+				<tr>
+					<td>5</td>
+					<td>Niels</td>
+				</tr>
+			</tbody>
+		</table>
+		<pre class="prettyprint">var columnIndex = order = 0;
+	
+$( "tbody" ).sortedList({
+	selector : "tr",
+	sort : [
+		function( el )
+		{
+			// Return an object, so you can pass the order and data to sort with
+			return { 
+				order : order ? "desc" : "asc" , 
+				data : $( el ).find( "td" ).eq( columnIndex ).text( )
+			};
+		}
+	]
+});
+
+$( "thead th" ).click( function(){
+	var newColumnIndex = $( this ).index( );
+	// Switch between ASC / DESC
+	if( newColumnIndex == columnIndex ){
+		order = !order;
+	} else {
+		columnIndex = newColumnIndex;
+	}
+	
+	// Reorder
+	$( "tbody" ).sortedList( "order" );
+} );
+</pre>
 		
-		<h2>Custom sorting</h2>
-		<p>Sort on checked and second on the class 'x' (style bold and red) and third on the index</p>
+		<h2>Sorting with checkboxes in LI ( depending on multiple fields )</h2>
+		<p>Sort on checked and second on the class 'x' ( style bold and red ) and third on the index</p>
 		<ul id="demo02">
 			<li><input type="checkbox" /> A</li>
 			<li><input type="checkbox" /> B</li>
@@ -61,17 +114,60 @@
 		// Sort on moved or not DESC
 		//	Like you see data, you can use attr or whatever jQuery getter you want
 		//	it calls functions like: a.data( "al-moved" ), a.attr( "al-moved" ), etc
-		{ desc : { data : "al-moved" } },
+		{ desc : { data : "moved" } },
 		
 		// Sort on the class "x"
 		function( el ){
 			return !$(el).hasClass( "x");
 		},
 		
-		// Sort on the data index ASC
+		// Sort on the data index ASC (al-index is internal var for the initial index of an item)
 		{ asc : { data : "al-index" } }
 	]
-});</pre>
+});
+
+// When checkbox change, move to top or back into position
+$("#demo01, #demo02")
+	.find( "input[type=checkbox]" )
+		.each(function(){
+			// Initial set moved to 0 because not moved
+			$( this ).parent().data( "moved", 0 );
+		})
+		.change( function(){
+			// Set moved, so we can sort on it
+			$( this ).parent().data( "moved", $(this).is(":checked") );
+			
+			// Call function to reorder
+			$("#demo01, #demo02").sortedList( "order" )
+		});
+			</pre>
+		
+		<h2>How to use</h2>
+		
+		<p>
+			Initializing:
+		</p>
+		<pre class="prettyprint">$( "SELECTOR" ).sortedList( SETTINGS );</pre>
+		
+		<p>
+			GET settings:
+		</p>
+		<pre class="prettyprint">$( "SELECTOR" ).sortedList( KEY );</pre>
+		
+		<p>
+			SET settings:
+		</p>
+		<pre class="prettyprint">$( "SELECTOR" ).sortedList( KEY, VALUE );</pre>
+		
+		<p>
+			CALL internal functions:
+		</p>
+		<pre class="prettyprint">$( "SELECTOR" ).sortedList( FUNCTIONNAME );</pre>
+		
+		<h2>Related plugins</h2>
+		<ul>
+			<li><a href="http://www.lutrasoft.nl/jQuery/fancyform/">jQuery Fancyform</a></li>
+		</ul>
 		
 		<h2>License / Download</h2>
 		<p>
@@ -88,11 +184,6 @@
 			<input type="image" src="https://www.paypalobjects.com/nl_NL/NL/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal, de veilige en complete manier van online betalen.">
 			<img alt="" border="0" src="https://www.paypalobjects.com/nl_NL/i/scr/pixel.gif" width="1" height="1">
 		</form>
-		
-		<h2>Related plugins</h2>
-		<ul>
-			<li><a href="http://www.lutrasoft.nl/jQuery/fancyform/">jQuery Fancyform</a></li>
-		</ul>
 	</div>
 </body>
 </html>
