@@ -42,7 +42,7 @@ Sort on checked and second on the class 'x' ( style bold and red ) and third on 
 		sort : [
 			// Sort on moved or not DESC
 			//	Like you see data, you can use attr or whatever jQuery getter you want
-			//	it calls functions like: a.data( "al-moved" ), a.attr( "al-moved" ), etc
+			//	it calls functions like: a.data( "moved" ), a.attr( "moved" ), etc
 			{ desc : { data : "moved" } },
 			
 			// Sort on the class "x"
@@ -82,7 +82,7 @@ GET settings:
 
 SET settings:
 
-$( "SELECTOR" ).sortedList( KEY, VALUE );
+	$( "SELECTOR" ).sortedList( KEY, VALUE );
 
 CALL internal functions:
 
